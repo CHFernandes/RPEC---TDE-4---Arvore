@@ -37,13 +37,19 @@ public class Main {
 
         inordem(a.meu_nome_eh_root());
 
+        System.out.println();
+
         System.out.println("Preordem");
 
         preordem(a.meu_nome_eh_root());
 
+        System.out.println();
+
         System.out.println("posordem");
 
         posordem(a.meu_nome_eh_root());
+
+        System.out.println();
 
     }
 
@@ -145,12 +151,12 @@ public class Main {
                 No dir = no.direita();
 
                 if (aux.esquerda() == no){
-                    no.alt_dado(busca(dir));
+                    no.alt_dado(busca(dir, aux.esquerda()));
                     aux.altesq(no);
                     //nao removeu o na direita do no à esquerda do aux, apenas alterou o no à esquerda do aux
 
                 }else {
-                    no.alt_dado(busca(dir));
+                    no.alt_dado(busca(dir, aux.direita()));
                     aux.altdir(no);
                 }
 
@@ -185,16 +191,18 @@ public class Main {
         }
     }
 
-    public static int busca(No no){
-        No pai = null;
+    public static int busca(No no, No aux){
+        No pai = aux;
 
         while (no.esquerda() != null){
             pai = no;
             no = no.esquerda();
         }
 
-        if (pai != null){
+        if (pai != aux){
             pai.altesq(no.direita());
+        }else {
+            pai.altdir(null);
         }
 
         return no.retorna_dado();
