@@ -33,15 +33,15 @@ public class Main {
 
         remover(a,3);
 
-        System.out.println();
+        System.out.println("Inordem");
 
         inordem(a.meu_nome_eh_root());
 
-        System.out.println();
+        System.out.println("Preordem");
 
         preordem(a.meu_nome_eh_root());
 
-        System.out.println();
+        System.out.println("posordem");
 
         posordem(a.meu_nome_eh_root());
 
@@ -58,15 +58,15 @@ public class Main {
     public static void preordem(No no){
         if (no != null){
             System.out.println(no.retorna_dado());
-            inordem(no.esquerda());
-            inordem(no.direita());
+            preordem(no.esquerda());
+            preordem(no.direita());
         }
     }
 
     public static void posordem(No no){
         if (no != null){
-            inordem(no.esquerda());
-            inordem(no.direita());
+            posordem(no.esquerda());
+            posordem(no.direita());
             System.out.println(no.retorna_dado());
         }
     }
@@ -142,17 +142,18 @@ public class Main {
             }
 
             if (no.esquerda() != null && no.direita() != null){
-                No esq = no.esquerda();
                 No dir = no.direita();
 
                 if (aux.esquerda() == no){
-                    aux.altesq(null);
+                    no.alt_dado(busca(dir));
+                    aux.altesq(no);
+                    //nao removeu o na direita do no à esquerda do aux, apenas alterou o no à esquerda do aux
+
                 }else {
-                    aux.altdir(null);
+                    no.alt_dado(busca(dir));
+                    aux.altdir(no);
                 }
 
-                succession_crisis(esq, groot);
-                succession_crisis(dir,groot);
                 return true;
             }else {
                 if (no.direita() == null){
@@ -184,12 +185,20 @@ public class Main {
         }
     }
 
-    public static void succession_crisis(No no, Arvore groot){
-        if (no != null){
-            insere_elemento(groot, no.retorna_dado());
-            succession_crisis(no.esquerda(),groot);
-            succession_crisis(no.direita(),groot);
+    public static int busca(No no){
+        No pai = null;
+
+        while (no.esquerda() != null){
+            pai = no;
+            no = no.esquerda();
         }
+
+        if (pai != null){
+            pai.altesq(no.direita());
+        }
+
+        return no.retorna_dado();
+
     }
 
     public static int nivel(No no){

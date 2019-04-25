@@ -21,6 +21,11 @@ public class No {
         return this.dado;
     }
 
+    public void alt_dado(int dado){
+
+        this.dado = dado;
+    }
+
     public No esquerda(){
         return this.esquerda;
     }
