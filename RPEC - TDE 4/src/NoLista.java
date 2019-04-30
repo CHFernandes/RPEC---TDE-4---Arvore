@@ -1,9 +1,9 @@
 public class NoLista {
 
-        private int dado;
+        private String dado;
         private NoLista proximo;
 
-        NoLista(int dado){
+        NoLista(String dado){
             this.dado = dado;
             this.proximo = null;
         }
@@ -16,7 +16,7 @@ public class NoLista {
             return this.proximo;
         }
 
-        int getDado(){
+        String getDado(){
             return this.dado;
         }
 }

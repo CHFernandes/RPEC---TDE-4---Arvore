@@ -16,7 +16,15 @@ public class Lista {
         }
     }
 
-    void insere_primeiro(int info){
+    void inserir(String info){
+        if(vazia()){
+            insere_primeiro(info);
+        }else {
+            insere_ultimo(info);
+        }
+    }
+
+    void insere_primeiro(String info){
         NoLista novo = new NoLista(info);
         if (vazia()){
             this.primeiro = novo;
@@ -28,37 +36,12 @@ public class Lista {
 
     }
 
-    void insere_depois(NoLista no, int info){
-        NoLista novo = new NoLista(info);
-        novo.alteraproximo(no.getProximo());
-        no.alteraproximo(novo);
-    }
-
-    void insere_ultimo(int info){
+    void insere_ultimo(String info){
         NoLista novo = new NoLista(info);
         this.ultimo.alteraproximo(novo);
         this.ultimo = novo;
     }
 
-    public void insere_ordenado(int info){
-        if (vazia()){
-            insere_primeiro(info);
-        }else {
-            if(this.primeiro.getDado() >= info){
-                insere_primeiro(info);
-            }else {
-                if (info >= this.ultimo.getDado()){
-                    insere_ultimo(info);
-                }else {
-                    NoLista p = this.primeiro;
-                    while (p.getProximo().getDado() < info){
-                        p = p.getProximo();
-                    }
-                    insere_depois(p,info);
-                }
-            }
-        }
-    }
 
     public void mostra_lista(){
         NoLista p = this.primeiro;
@@ -69,15 +52,15 @@ public class Lista {
         }
     }
 
-    public NoLista acha_no(int info){
+    public NoLista acha_no(String info){
         NoLista p = this.primeiro;
         while (p != null){
-            if(p.getDado() == info){
+            if(p.getDado().equals(info)){
                 return p;
             }
             p = p.getProximo();
         }
-        return new NoLista(-1);
+        return null;
     }
 
     public void retira_primeiro(){
@@ -120,7 +103,7 @@ public class Lista {
         p.alteraproximo(null);
     }
 
-    public int retorna_ultimo(){
+    public String retorna_ultimo(){
         return this.ultimo.getDado();
     }
 
