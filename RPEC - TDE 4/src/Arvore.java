@@ -1,19 +1,19 @@
 public class Arvore {
     private No root;
 
-    public Arvore(){
+    Arvore(){
         this.root = null;
     }
 
-    public void insere_root(No no){
+    void insere_root(No no){
         this.root = no;
     }
 
-    public No meu_nome_eh_root(){
+    No meu_nome_eh_root(){
         return this.root;
     }
 
-    public boolean vazio(){
+    boolean vazio(){
         if (this.root == null){
             return true;
         }else {
@@ -158,7 +158,7 @@ public class Arvore {
         }
     }
 
-    public static String busca(No no, No aux){
+    static String busca(No no, No aux){
         No pai = aux;
 
         while (no.esquerda() != null){
