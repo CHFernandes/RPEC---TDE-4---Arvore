@@ -25,6 +25,7 @@ public class Arvore {
         if (no != null){
             inordem(no.esquerda());
             System.out.println(no.retorna_dado());
+            no.retorna_endereco();
             inordem(no.direita());
         }
     }
@@ -32,6 +33,7 @@ public class Arvore {
     void preordem(No no){
         if (no != null){
             System.out.println(no.retorna_dado());
+            no.retorna_endereco();
             preordem(no.esquerda());
             preordem(no.direita());
         }
@@ -42,32 +44,59 @@ public class Arvore {
             posordem(no.esquerda());
             posordem(no.direita());
             System.out.println(no.retorna_dado());
+            no.retorna_endereco();
         }
     }
 
-    void insere_elemento(String dado) {
+    void insere_elemento(String dado,String endereco) {
 
         if (vazio()){
-            insere_root(new No(dado));
+            insere_root(new No(dado, endereco));
         }else {
+            if (encontra_elemento(dado) == null){
+                No no = meu_nome_eh_root();
+                No aux = null;
 
-            No no = meu_nome_eh_root();
-            No aux = null;
-
-            while (no != null) {
-                aux = no;
-                if (dado.compareTo(no.retorna_dado()) < 0) {
-                    no = no.esquerda();
+                while (no != null) {
+                    aux = no;
+                    if (dado.compareTo(no.retorna_dado()) < 0) {
+                        no = no.esquerda();
+                    } else {
+                        no = no.direita();
+                    }
+                }
+                if (dado.compareTo(aux.retorna_dado()) < 0) {
+                    aux.insere_esquerda(new No(dado, endereco));
                 } else {
+                    aux.insere_direita(new No(dado, endereco));
+                }
+            } else {
+                if (encontra_elemento(dado).retorna_lista().acha_no(endereco) == null){
+                    encontra_elemento(dado).retorna_lista().inserir(endereco);
+                }else {
+                    encontra_elemento(dado).retorna_lista().acha_no(endereco).incrementa();
+                }
+            }
+        }
+    }
+
+    No encontra_elemento(String dado){
+        if (vazio()){
+            return null;
+        }else {
+            No no = meu_nome_eh_root();
+
+            while (no !=null){
+                if (no.retorna_dado().compareTo(dado) == 0){
+                    return no;
+                }
+                if (no.retorna_dado().compareTo(dado) > 0){
+                    no = no.esquerda();
+                }else {
                     no = no.direita();
                 }
-
             }
-            if (dado.compareTo(aux.retorna_dado()) < 0) {
-                aux.insere_esquerda(new No(dado));
-            } else {
-                aux.insere_direita(new No(dado));
-            }
+            return null;
         }
     }
 

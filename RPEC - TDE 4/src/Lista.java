@@ -2,10 +2,9 @@ public class Lista {
 
     private NoLista primeiro;
     private NoLista ultimo;
-    private int tamanho;
 
     public Lista(){
-        this.tamanho = 0;
+
     }
 
     boolean vazia(){
@@ -45,11 +44,14 @@ public class Lista {
 
     public void mostra_lista(){
         NoLista p = this.primeiro;
+        int soma = 0;
 
         while (p != null){
-            System.out.println(p.getDado());
+            System.out.println(p.getDado() + " " + p.getCount());
+            soma = soma + p.getCount();
             p = p.getProximo();
         }
+        System.out.println("Total de ocorrências: " + soma);
     }
 
     public NoLista acha_no(String info){
@@ -62,65 +64,4 @@ public class Lista {
         }
         return null;
     }
-
-    public void retira_primeiro(){
-        System.out.println(this.primeiro.getDado());
-        this.primeiro = this.primeiro.getProximo();
-    }
-
-    public void retira_depois(NoLista no){
-
-        NoLista retirar, atual;
-        retirar = no.getProximo();
-        atual = this.primeiro;
-
-        while (atual != null){
-            if (atual.getProximo() == retirar){
-                atual.alteraproximo(retirar.getProximo());
-            }
-            atual = atual.getProximo();
-        }
-    }
-
-    public NoLista getprimeiro(){
-        return this.primeiro;
-    }
-
-    public void nullify(){
-        this.primeiro = null;
-        this.ultimo = null;
-    }
-
-    public void retira_ultimo(){
-        NoLista p = this.primeiro;
-
-        while (p.getProximo() != this.ultimo){
-            p = p.getProximo();
-        }
-
-        System.out.println(this.ultimo.getDado());
-        this.ultimo = p;
-        p.alteraproximo(null);
-    }
-
-    public String retorna_ultimo(){
-        return this.ultimo.getDado();
-    }
-
-    int size(NoLista p){
-        if (p != null){
-            return  size(p.getProximo()) + 1;
-        }else {
-            return  0;
-        }
-    }
-
-    int soma(int contador, NoLista p){
-        if (p != null){
-            contador = contador + 1;
-            return soma(contador, p.getProximo());
-        }
-        return contador;
-    }
-
 }

@@ -24,6 +24,14 @@ class No {
         return this.dado;
     }
 
+    Lista retorna_lista(){
+        return this.lista;
+    }
+
+    void retorna_endereco(){
+        this.lista.mostra_lista();
+    }
+
     void alt_dado(String dado){
 
         this.dado = dado;
