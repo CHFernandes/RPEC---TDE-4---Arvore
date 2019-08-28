@@ -1,233 +1,114 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
 
+        //parte 1
+
         Arvore a = new Arvore();
 
-        insere_elemento(a, 5);
-        insere_elemento(a, 12);
-        insere_elemento(a, 7);
-        insere_elemento(a, 9);
-        insere_elemento(a, 22);
-        insere_elemento(a, 3);
-        insere_elemento(a, 1);
-        insere_elemento(a, 4);
-        insere_elemento(a, 18);
-        insere_elemento(a, 16);
-        insere_elemento(a, 13);
+        a.insere_elemento("5","N/A");
+        a.insere_elemento("12","N/A");
+        a.insere_elemento("7","N/A");
+        a.insere_elemento("9","N/A");
+        a.insere_elemento("22","N/A");
+        a.insere_elemento("3","N/A");
+        a.insere_elemento("1","N/A");
+        a.insere_elemento("4","N/A");
+        a.insere_elemento("18","N/A");
+        a.insere_elemento("16","N/A");
+        a.insere_elemento("13","N/A");
 
-        inordem(a.meu_nome_eh_root());
-
-        System.out.println();
-
-        preordem(a.meu_nome_eh_root());
+        a.inordem(a.meu_nome_eh_root());
 
         System.out.println();
 
-        posordem(a.meu_nome_eh_root());
+        a.preordem(a.meu_nome_eh_root());
 
         System.out.println();
 
-        System.out.println(altura(a));
+        a.posordem(a.meu_nome_eh_root());
 
         System.out.println();
 
-        remover(a,3);
+        System.out.println(a.altura());
+
+        System.out.println();
+
+        a.remover("3");
 
         System.out.println("Inordem");
 
-        inordem(a.meu_nome_eh_root());
+        a.inordem(a.meu_nome_eh_root());
 
         System.out.println();
 
         System.out.println("Preordem");
 
-        preordem(a.meu_nome_eh_root());
+        a.preordem(a.meu_nome_eh_root());
 
         System.out.println();
 
         System.out.println("posordem");
 
-        posordem(a.meu_nome_eh_root());
+        a.posordem(a.meu_nome_eh_root());
 
         System.out.println();
 
+        //parte 2
+
+        Arvore treebeard = new Arvore();
+
+        inserir_arquivos("C:\\Users\\chfer\\IdeaProjects\\RPEC - TDE 4\\src\\arqs" , treebeard);
+
+        inputar(treebeard);
+
     }
 
-    public static void inordem(No no){
-        if (no != null){
-            inordem(no.esquerda());
-            System.out.println(no.retorna_dado());
-            inordem(no.direita());
-        }
-    }
-
-    public static void preordem(No no){
-        if (no != null){
-            System.out.println(no.retorna_dado());
-            preordem(no.esquerda());
-            preordem(no.direita());
-        }
-    }
-
-    public static void posordem(No no){
-        if (no != null){
-            posordem(no.esquerda());
-            posordem(no.direita());
-            System.out.println(no.retorna_dado());
-        }
-    }
-
-    public static void insere_elemento(Arvore groot, int dado) {
-
-        if (groot.vazio()){
-            groot.insere_root(new No(dado));
-        }else {
-
-            No no = groot.meu_nome_eh_root();
-            No aux = null;
-
-            while (no != null) {
-                aux = no;
-                if (dado < no.retorna_dado()) {
-                    no = no.esquerda();
-                } else {
-                    no = no.direita();
-                }
-
-            }
-            if (dado < aux.retorna_dado()) {
-                aux.insere_esquerda(new No(dado));
-            } else {
-                aux.insere_direita(new No(dado));
-            }
-        }
-    }
-
-    public static void remover(Arvore groot, int dado){
-        if (remove_elemento(groot,dado)){
-            System.out.println("Elemento removido");
-        }else {
-            System.out.println("Elemento inexistente");
-        }
-    }
-
-    public static boolean remove_elemento(Arvore groot, int dado){
-        if (groot.vazio()){
-            System.out.println("Árvore vazia");
-            return false;
-        }else {
-
-            No no = groot.meu_nome_eh_root();
-            No aux = null;
-
-            while (no != null && no.retorna_dado()!= dado) {
-                aux = no;
-                if (dado < no.retorna_dado()) {
-                    no = no.esquerda();
-                } else {
-                    no = no.direita();
-                }
-            }
-
-            if (no == null){
-                return false;
-            }
-
-            if (no.direita() == null && no.esquerda() == null){
-                if (no == groot.meu_nome_eh_root()){
-                    groot.insere_root(null);
-                    return true;
-                }
-                if (aux.esquerda() == no){
-                    aux.altesq(null);
-                    return true;
-                } else {
-                    aux.altdir(null);
-                    return true;
-                }
-            }
-
-            if (no.esquerda() != null && no.direita() != null){
-                No dir = no.direita();
-
-                if (aux.esquerda() == no){
-                    no.alt_dado(busca(dir, aux.esquerda()));
-                    aux.altesq(no);
-                    //nao removeu o na direita do no à esquerda do aux, apenas alterou o no à esquerda do aux
-
-                }else {
-                    no.alt_dado(busca(dir, aux.direita()));
-                    aux.altdir(no);
-                }
-
-                return true;
+    public static void inputar(Arvore groot){
+        Scanner scanner = new Scanner(System.in);
+        String input = "";
+        No resultado;
+        while (true){
+            System.out.print("Insira uma palavra: ");
+            input = scanner.nextLine().toLowerCase();
+            resultado = groot.encontra_elemento(input);
+            if (resultado == null){
+                System.out.println("Nenhuma ocorrência encontrada");
             }else {
-                if (no.direita() == null){
-                    if (no == groot.meu_nome_eh_root()){
-                        groot.insere_root(no.esquerda());
-                        return true;
+                resultado.retorna_lista().mostra_lista();
+            }
+            System.out.println();
+        }
+    }
+
+    public static void inserir_arquivos(String diretorio, Arvore groot){
+        File dir = new File(diretorio);
+
+        File[]arquivos = dir.listFiles();
+
+        for (int i=0; i < arquivos.length; i++){
+            if(arquivos[i].getName().endsWith(".txt")){
+                try {
+                    FileReader arq = new FileReader(arquivos[i]);
+                    BufferedReader lerarq = new BufferedReader(arq);
+                    String linha = lerarq.readLine();
+                    while (linha != null){
+                        if (!linha.equals("")){
+                            groot.insere_elemento(linha.toLowerCase(), arquivos[i].getName());
+                        }
+                        linha = lerarq.readLine();
                     }
-                    if (aux.esquerda() == no){
-                        aux.altesq(no.esquerda());
-                        return true;
-                    } else {
-                        aux.altdir(no.esquerda());
-                        return true;
-                    }
-                } else {
-                    if (no == groot.meu_nome_eh_root()) {
-                        groot.insere_root(no.direita());
-                        return true;
-                    }
-                    if (aux.esquerda() == no) {
-                        aux.altesq(no.direita());
-                        return true;
-                    } else {
-                        aux.altdir(no.direita());
-                        return true;
-                    }
+                    arq.close();
+                }catch (IOException e){
+                    System.out.println("Erro na abertura do arquivo: " + e.getMessage());
                 }
+                System.out.println();
             }
-        }
-    }
-
-    public static int busca(No no, No aux){
-        No pai = aux;
-
-        while (no.esquerda() != null){
-            pai = no;
-            no = no.esquerda();
-        }
-
-        if (pai != aux){
-            pai.altesq(no.direita());
-        }else {
-            pai.altdir(null);
-        }
-
-        return no.retorna_dado();
-
-    }
-
-    public static int nivel(No no){
-        if (no == null){
-            return -1;
-        }else {
-            int esq = nivel(no.esquerda()) + 1;
-            int dir = nivel(no.direita()) + 1;
-            if (esq >= dir){
-                return esq;
-            }else {
-                return dir;
-            }
-        }
-    }
-
-    public static int altura(Arvore groot){
-        if (groot.vazio()){
-            return -1;
-        } else {
-            return nivel(groot.meu_nome_eh_root());
         }
     }
 }

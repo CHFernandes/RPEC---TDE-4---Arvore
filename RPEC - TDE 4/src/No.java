@@ -1,44 +1,55 @@
-public class No {
+class No {
     private No esquerda;
     private No direita;
-    private int dado;
+    private String dado;
+    private Lista lista;
 
-    public No(int dado){
+    No(String dado, String endereco){
         this.dado = dado;
         this.direita = null;
         this.esquerda = null;
+        this.lista = new Lista();
+        lista.inserir(endereco);
     }
 
-    public void insere_esquerda(No esquerda){
+    void insere_esquerda(No esquerda){
         this.esquerda = esquerda;
     }
 
-    public void insere_direita(No direita){
+    void insere_direita(No direita){
         this.direita = direita;
     }
 
-    public int retorna_dado(){
+    String retorna_dado(){
         return this.dado;
     }
 
-    public void alt_dado(int dado){
+    Lista retorna_lista(){
+        return this.lista;
+    }
+
+    void retorna_endereco(){
+        this.lista.mostra_lista();
+    }
+
+    void alt_dado(String dado){
 
         this.dado = dado;
     }
 
-    public No esquerda(){
+    No esquerda(){
         return this.esquerda;
     }
 
-    public No direita(){
+    No direita(){
         return this.direita;
     }
 
-    public void altesq(No novo){
+    void altesq(No novo){
         this.esquerda = novo;
     }
 
-    public void altdir(No novo){
+    void altdir(No novo){
         this.direita = novo;
     }
 }
